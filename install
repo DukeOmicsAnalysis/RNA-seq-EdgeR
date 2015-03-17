@@ -1,0 +1,26 @@
+#!/bin/sh
+
+scriptdir=`dirname $0`
+
+pipeline="RNAseq+edgeR"
+
+source $scriptdir/../common/install_common_part.sh
+
+$scriptdir/../common/base/install_part
+$scriptdir/../common/r0_prepareInput/install_part
+$scriptdir/../common/r1_TrimGalore/install_part
+$scriptdir/../common/r2_FastQC/install_part
+$scriptdir/../common/r3_STAR/install_part
+$scriptdir/../common/r4_HTSeq/install_part
+$scriptdir/../common/r6_Analysis/install_part
+$scriptdir/../common/r7_GSEA/install_part
+$scriptdir/../common/r8_makeBAM/install_part
+$scriptdir/../common/r9_clean/install_part
+
+echo "Installing specific pipeline scripts:"
+echo "  Copying files to $projscriptsdir..."
+cp -r $scriptdir/scripts/* $projscriptsdir
+
+source $scriptdir/../common/install_common_part_2.sh
+
+set-omicscore $projscriptsdir go            # to set group write access
